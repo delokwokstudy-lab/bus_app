@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>巴士報站模擬器</title>
+    <title>巴士報站</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -58,6 +58,7 @@
                 return saved ? JSON.parse(saved) : [
                     { id: 1, number: "71B", destination: "大埔中心", color: "bg-red-600", stops: ["歡迎", "大埔中心"] },
                     { id: 2, number: "272K", destination: "大學站", color: "bg-orange-500", stops: ["歡迎", "大學站"] },
+                    { id: 6, number: "272K", destination: "香港科學園", color: "bg-orange-500", stops: ["歡迎", "香港科學園"] },
                     { id: 3, number: "49X", destination: "廣源", color: "bg-green-600", stops: ["歡迎", "廣源"] },
                     { id: 4, number: "274P", destination: "馬鞍山站", color: "bg-zinc-700", stops: ["歡迎", "馬鞍山站"] },
                     { id: 5, number: "72K", destination: "太和", color: "bg-blue-600", stops: ["歡迎", "太和"] }
@@ -192,9 +193,12 @@
                                             <div className="flex items-center bg-gray-100 rounded-xl">
                                                 <label className="p-3 text-gray-400 hover:text-blue-500 cursor-pointer">
                                                     <i className="fas fa-upload text-sm"></i>
-                                                    <input type="file" className="hidden" accept="audio/*" onChange={(e) => {
+                                                    <input type="file" className="hidden" accept="audio/mpeg,audio/wav,audio/x-wav,audio/mp3" onChange={(e) => {
                                                         const file = e.target.files[0];
-                                                        if(file) setCustomAudio(prev => ({ ...prev, [`${selectedRoute.id}-${i}`]: URL.createObjectURL(file) }));
+                                                        if(file) {
+                                                            setCustomAudio(prev => ({ ...prev, [`${selectedRoute.id}-${i}`]: URL.createObjectURL(file) }));
+                                                            showToast("已上傳音檔");
+                                                        }
                                                     }} />
                                                 </label>
                                                 <div className="w-[1px] h-4 bg-gray-200"></div>
